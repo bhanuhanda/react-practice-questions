@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Virtualisation.css';
 
-const dataSet = new Array(100).fill(0);
+const dataSet = new Array(100).fill(0).map((val, idx) => idx);
 const divHeightWithGaps = 100;
 
 const Virtualisation = () => {
@@ -10,13 +10,15 @@ const Virtualisation = () => {
         starti: 0,
         endi: 10
     });
+    const [visibleListItems, setVisibleListItems] = useState([]);
+
 
     const handleScroll = () => {
         const pos = window.pageYOffset;
         setScrollPosition(pos);
     }
 
-    console.log({ scrollPosition });
+    console.log({ scrollPosition, visibleDataSet });
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -30,13 +32,17 @@ const Virtualisation = () => {
         const si = parseInt(Math.floor(scrollPosition/divHeightWithGaps)); // idx of first div appearing in viewport
         const ei = si + numOfElemsOnScreen + 1;
 
-        console.log({ si, ei });
-        setVisibleDataSet({starti: si, end: ei});
+        setVisibleDataSet({starti: si, endi: ei});
     }, [scrollPosition])
+
+    useEffect(() => {
+        setVisibleListItems(dataSet.slice(visibleDataSet.starti, visibleDataSet.endi));
+    }, [visibleDataSet.starti, visibleDataSet.endi])
+
 
     return (
         <>
-            {dataSet.slice(visibleDataSet.starti, visibleDataSet.endi).map((v, idx) => <div className="content-row" key={idx+1}>Row: {idx+1}</div>)}
+            {visibleListItems.map((v, idx) => <div className="content-row" key={idx+1}>Row: {idx+1}</div>)}
         </>
     )
 }
