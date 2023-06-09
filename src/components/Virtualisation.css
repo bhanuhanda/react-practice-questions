@@ -1,23 +1,27 @@
 
 :root {
+    --other-color: #242424;
     --secondary-color: #a6a6a6;
 }
 
+#virtual-container {
+    height: 600px;
+    overflow: scroll;
+}
+
 .content-row {
+    /* font inside */
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
-
-    height: 80px;
-    width: 480px;
-    margin-bottom: 10px;
-
-    color: #242424;
+    color: var(--other-color);
     font-weight: bold;
-    background-color: var(--secondary-color);
 
+    /* div */
+    height: 60px;
+    width: 480px;
+    background-color: var(--secondary-color);
     border-radius: 5px;
-    border: var(--secondary-color) 1px solid;
-    box-shadow: 1px 1px 1px 0px var(--secondary-color);
+    border: var(--other-color) 1px solid;
 }
